@@ -37,14 +37,18 @@ public class GlobalDayCounter : MonoBehaviour
     void FirstLaunch()
     {
     //    this is cfg making.   Utc.now is a finding a not user set date time and finding a regional format or idk something like this
+    //    making a varible with date
         DateTime now = DateTime.UtcNow;
-        string timeText = now.ToString();
+    //    taking from varible "now" a year month and day and setting a time to 0 0 0 cus tamagochi will change day in the download time like new day at 15:00
+        DateTime targetTime = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
+    //    fixing errors if we will move to the another country or just change a utc or gmt, (like in half year)
+        string timeText = targetTime.ToString(System.Globalization.CultureInfo.InvariantCulture);
         File.WriteAllText(filePath, timeText);
         Debug.Log("first count day cfg saved");
     }
     // making global usable day counter and showing in unity
     
-    [SerializeField] protected int daysPassed;
+    protected int daysPassed;
     protected void RegularLaunch()
     {
         try 
